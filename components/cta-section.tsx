@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { motion } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function CTASection() {
   return (
@@ -14,34 +14,41 @@ export function CTASection() {
           className="absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              'radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.2) 0%, transparent 50%)',
+              "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.2) 0%, transparent 50%)",
           }}
           animate={{
-            backgroundPosition: ['0% 0%', '100% 100%'],
+            backgroundPosition: ["0% 0%", "100% 100%"],
           }}
           transition={{
             duration: 20,
             repeat: Infinity,
-            repeatType: 'reverse',
+            repeatType: "reverse",
           }}
         />
       </div>
 
       {/* Floating Elements */}
-      {[...Array(6)].map((_, i) => (
+      {[
+        { left: 10, top: 15, duration: 6 },
+        { left: 75, top: 25, duration: 7 },
+        { left: 30, top: 60, duration: 5 },
+        { left: 85, top: 70, duration: 8 },
+        { left: 50, top: 40, duration: 6.5 },
+        { left: 15, top: 85, duration: 7.5 },
+      ].map((item, i) => (
         <motion.div
           key={i}
           className="absolute h-64 w-64 rounded-full bg-white/5"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${item.left}%`,
+            top: `${item.top}%`,
           }}
           animate={{
             y: [0, -30, 0],
             opacity: [0.3, 0.6, 0.3],
           }}
           transition={{
-            duration: 5 + Math.random() * 3,
+            duration: item.duration,
             repeat: Infinity,
             delay: i * 0.5,
           }}
@@ -80,7 +87,7 @@ export function CTASection() {
             transition={{ delay: 0.2 }}
             className="mx-auto mt-6 max-w-xl text-pretty text-lg text-white/80"
           >
-            Inscrivez-vous maintenant et bénéficiez de{' '}
+            Inscrivez-vous maintenant et bénéficiez de{" "}
             <span className="font-bold text-accent">-20%</span> sur votre
             première commande. Livraison gratuite dès 25€ d&apos;achat.
           </motion.p>
@@ -93,10 +100,7 @@ export function CTASection() {
             transition={{ delay: 0.3 }}
             className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 size="lg"
                 className="group w-full bg-white text-primary shadow-xl hover:bg-white/90 sm:w-auto"
@@ -106,10 +110,7 @@ export function CTASection() {
               </Button>
             </motion.div>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 size="lg"
                 variant="outline"
@@ -147,19 +148,19 @@ export function CTASection() {
             className="pointer-events-none absolute inset-0 -z-10"
             animate={{
               boxShadow: [
-                '0 0 100px 50px rgba(255,255,255,0.1)',
-                '0 0 150px 80px rgba(255,255,255,0.15)',
-                '0 0 100px 50px rgba(255,255,255,0.1)',
+                "0 0 100px 50px rgba(255,255,255,0.1)",
+                "0 0 150px 80px rgba(255,255,255,0.15)",
+                "0 0 100px 50px rgba(255,255,255,0.1)",
               ],
             }}
             transition={{
               duration: 3,
               repeat: Infinity,
-              ease: 'easeInOut',
+              ease: "easeInOut",
             }}
           />
         </div>
       </div>
     </section>
-  )
+  );
 }
