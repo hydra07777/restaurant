@@ -1,41 +1,41 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { ChefHat, Leaf, Timer, Award } from 'lucide-react'
+import { motion } from "framer-motion";
+import { ChefHat, Leaf, Timer, Award } from "lucide-react";
 
 const features = [
   {
     icon: ChefHat,
-    title: 'Chefs Experts',
+    title: "Chefs Experts",
     description:
-      'Nos chefs passionnés préparent chaque plat avec soin et expertise.',
+      "Nos chefs passionnés préparent chaque plat avec soin et expertise.",
   },
   {
     icon: Leaf,
-    title: 'Ingrédients Frais',
+    title: "Ingrédients Frais",
     description:
-      'Nous sélectionnons uniquement les meilleurs ingrédients locaux et de saison.',
+      "Nous sélectionnons uniquement les meilleurs ingrédients locaux et de saison.",
   },
   {
     icon: Timer,
-    title: 'Livraison Rapide',
+    title: "Livraison Rapide",
     description:
-      'Votre commande arrive chaude et fraîche en moins de 30 minutes.',
+      "Votre commande arrive chaude et fraîche en moins de 30 minutes.",
   },
   {
     icon: Award,
-    title: 'Qualité Garantie',
+    title: "Qualité Garantie",
     description:
-      'Satisfaction garantie ou remboursé. Votre bonheur est notre priorité.',
+      "Satisfaction garantie ou remboursé. Votre bonheur est notre priorité.",
   },
-]
+];
 
 const stats = [
-  { value: '50k+', label: 'Commandes livrées' },
-  { value: '4.9', label: 'Note moyenne' },
-  { value: '200+', label: 'Restaurants partenaires' },
-  { value: '30', label: 'Minutes en moyenne' },
-]
+  { value: "50k+", label: "Commandes livrées" },
+  { value: "4.9", label: "Note moyenne" },
+  { value: "200+", label: "Restaurants partenaires" },
+  { value: "30", label: "Minutes en moyenne" },
+];
 
 export function AboutSection() {
   return (
@@ -59,7 +59,7 @@ export function AboutSection() {
             À propos de nous
           </span>
           <h2 className="text-balance text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
-            Une passion pour la{' '}
+            Une passion pour la{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               gastronomie
             </span>
@@ -112,14 +112,14 @@ export function AboutSection() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="relative aspect-square overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 to-secondary/20 p-8">
-              <motion.div
+            <div className="relative aspect-square overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 to-secondary/20">
+              <motion.img
+                src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=600&h=600&fit=crop"
+                alt="Notre chef expert"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
-                className="flex h-full items-center justify-center text-9xl"
-              >
-                👨‍🍳
-              </motion.div>
+                className="w-full h-full object-cover"
+              />
 
               {/* Floating elements */}
               <motion.div
@@ -133,7 +133,9 @@ export function AboutSection() {
                   <span className="text-2xl">🏆</span>
                   <div>
                     <p className="text-sm font-bold text-foreground">Top 10</p>
-                    <p className="text-xs text-muted-foreground">Meilleure App 2024</p>
+                    <p className="text-xs text-muted-foreground">
+                      Meilleure App 2024
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -149,7 +151,9 @@ export function AboutSection() {
                   <span className="text-2xl">❤️</span>
                   <div>
                     <p className="text-sm font-bold text-foreground">+50 000</p>
-                    <p className="text-xs text-muted-foreground">Clients satisfaits</p>
+                    <p className="text-xs text-muted-foreground">
+                      Clients satisfaits
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -179,9 +183,9 @@ export function AboutSection() {
                 restaurants partenaires soigneusement sélectionnés.
               </p>
               <p>
-                Notre équipe de livreurs dévoués s&apos;assure que chaque commande
-                arrive chez vous dans les meilleures conditions, chaude et
-                savoureuse.
+                Notre équipe de livreurs dévoués s&apos;assure que chaque
+                commande arrive chez vous dans les meilleures conditions, chaude
+                et savoureuse.
               </p>
             </div>
 
@@ -215,5 +219,5 @@ export function AboutSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
