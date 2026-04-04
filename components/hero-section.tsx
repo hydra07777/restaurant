@@ -1,21 +1,45 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { ArrowRight, Clock, Star, Truck } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { motion } from "framer-motion";
+import { ArrowRight, Clock, Star, Truck } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const stats = [
-  { icon: Clock, label: 'Livraison', value: '30 min' },
-  { icon: Star, label: 'Évaluation', value: '4.9/5' },
-  { icon: Truck, label: 'Livraisons', value: '50k+' },
-]
+  { icon: Clock, label: "Livraison", value: "30 min" },
+  { icon: Star, label: "Évaluation", value: "4.9/5" },
+  { icon: Truck, label: "Livraisons", value: "50k+" },
+];
 
 const floatingItems = [
-  { emoji: '🍕', delay: 0, x: '10%', y: '20%' },
-  { emoji: '🍔', delay: 0.5, x: '85%', y: '15%' },
-  { emoji: '🍜', delay: 1, x: '75%', y: '70%' },
-  { emoji: '🥗', delay: 1.5, x: '15%', y: '75%' },
-]
+  {
+    image:
+      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=100&h=100&fit=crop",
+    delay: 0,
+    x: "10%",
+    y: "20%",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&h=100&fit=crop",
+    delay: 0.5,
+    x: "85%",
+    y: "15%",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=100&h=100&fit=crop",
+    delay: 1,
+    x: "75%",
+    y: "70%",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=100&h=100&fit=crop",
+    delay: 1.5,
+    x: "15%",
+    y: "75%",
+  },
+];
 
 export function HeroSection() {
   return (
@@ -35,7 +59,7 @@ export function HeroSection() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
         />
         <motion.div
@@ -47,7 +71,7 @@ export function HeroSection() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
         />
       </div>
@@ -56,11 +80,11 @@ export function HeroSection() {
       {floatingItems.map((item, index) => (
         <motion.div
           key={index}
-          className="absolute text-4xl md:text-6xl"
+          className="absolute w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden shadow-xl"
           style={{ left: item.x, top: item.y }}
           initial={{ opacity: 0, scale: 0 }}
           animate={{
-            opacity: 1,
+            opacity: 0.9,
             scale: 1,
             y: [0, -20, 0],
           }}
@@ -70,11 +94,15 @@ export function HeroSection() {
             y: {
               duration: 4,
               repeat: Infinity,
-              ease: 'easeInOut',
+              ease: "easeInOut",
             },
           }}
         >
-          {item.emoji}
+          <img
+            src={item.image}
+            alt="Plat délicieux"
+            className="w-full h-full object-cover"
+          />
         </motion.div>
       ))}
 
@@ -84,7 +112,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center lg:text-left"
           >
             {/* Badge */}
@@ -108,7 +136,7 @@ export function HeroSection() {
               transition={{ delay: 0.3 }}
               className="text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl"
             >
-              Vos plats préférés,{' '}
+              Vos plats préférés,{" "}
               <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 livrés chez vous
               </span>
@@ -182,8 +210,12 @@ export function HeroSection() {
                     <stat.icon className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
+                    <p className="text-xl font-bold text-foreground">
+                      {stat.value}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {stat.label}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -202,22 +234,26 @@ export function HeroSection() {
               <motion.div
                 className="absolute inset-0 rounded-full border-2 border-dashed border-primary/20"
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               />
               <motion.div
                 className="absolute inset-8 rounded-full border-2 border-dashed border-secondary/20"
                 animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
               />
 
               {/* Main content circle */}
-              <div className="absolute inset-16 flex items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-secondary/20">
+              <div className="absolute inset-16 flex items-center justify-center rounded-full overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20">
                 <motion.div
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 3, repeat: Infinity }}
-                  className="text-8xl md:text-9xl"
+                  className="relative w-full h-full"
                 >
-                  🍽️
+                  <img
+                    src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=400&fit=crop"
+                    alt="Plat gastronomique"
+                    className="w-full h-full object-cover"
+                  />
                 </motion.div>
               </div>
 
@@ -233,8 +269,12 @@ export function HeroSection() {
                     <span className="text-lg">⭐</span>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-foreground">Qualité Premium</p>
-                    <p className="text-xs text-muted-foreground">Ingrédients frais</p>
+                    <p className="text-sm font-semibold text-foreground">
+                      Qualité Premium
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Ingrédients frais
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -250,8 +290,12 @@ export function HeroSection() {
                     <Truck className="h-5 w-5 text-secondary" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-foreground">Livraison Express</p>
-                    <p className="text-xs text-muted-foreground">En 30 minutes</p>
+                    <p className="text-sm font-semibold text-foreground">
+                      Livraison Express
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      En 30 minutes
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -272,22 +316,26 @@ export function HeroSection() {
             Ils nous font confiance
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 opacity-60 grayscale">
-            {['Restaurant A', 'Bistro B', 'Café C', 'Gourmet D', 'Trattoria E'].map(
-              (partner, index) => (
-                <motion.div
-                  key={partner}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.6 + index * 0.1 }}
-                  className="text-lg font-semibold text-muted-foreground"
-                >
-                  {partner}
-                </motion.div>
-              )
-            )}
+            {[
+              "Restaurant A",
+              "Bistro B",
+              "Café C",
+              "Gourmet D",
+              "Trattoria E",
+            ].map((partner, index) => (
+              <motion.div
+                key={partner}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.6 + index * 0.1 }}
+                className="text-lg font-semibold text-muted-foreground"
+              >
+                {partner}
+              </motion.div>
+            ))}
           </div>
         </div>
       </motion.div>
     </section>
-  )
+  );
 }

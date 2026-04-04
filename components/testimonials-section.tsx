@@ -1,76 +1,84 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
     id: 1,
-    name: 'Marie Dupont',
-    role: 'Cliente fidèle',
-    avatar: '👩‍💼',
+    name: "Marie Dupont",
+    role: "Cliente fidèle",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face",
     rating: 5,
-    text: 'Service impeccable ! La livraison est toujours rapide et les plats arrivent chauds. Je recommande vivement DéliceExpress pour tous vos repas.',
+    text: "Service impeccable ! La livraison est toujours rapide et les plats arrivent chauds. Je recommande vivement DéliceExpress pour tous vos repas.",
   },
   {
     id: 2,
-    name: 'Pierre Martin',
-    role: 'Food lover',
-    avatar: '👨‍🍳',
+    name: "Pierre Martin",
+    role: "Food lover",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
     rating: 5,
     text: "La qualité des restaurants partenaires est exceptionnelle. J'ai découvert de nouvelles saveurs grâce à cette application. Un must-have !",
   },
   {
     id: 3,
-    name: 'Sophie Bernard',
-    role: 'Maman occupée',
-    avatar: '👩‍👧',
+    name: "Sophie Bernard",
+    role: "Maman occupée",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
     rating: 5,
     text: "Parfait pour les soirées où je n'ai pas le temps de cuisiner. Les enfants adorent et moi aussi ! Livraison en 25 minutes, incroyable.",
   },
   {
     id: 4,
-    name: 'Lucas Petit',
-    role: 'Étudiant',
-    avatar: '🧑‍🎓',
+    name: "Lucas Petit",
+    role: "Étudiant",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
     rating: 4,
-    text: 'Prix raisonnables et portions généreuses. Le service client est très réactif. Mon app préférée pour commander à manger !',
+    text: "Prix raisonnables et portions généreuses. Le service client est très réactif. Mon app préférée pour commander à manger !",
   },
   {
     id: 5,
-    name: 'Émilie Rousseau',
-    role: 'Entrepreneuse',
-    avatar: '👩‍💻',
+    name: "Émilie Rousseau",
+    role: "Entrepreneuse",
+    avatar:
+      "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&h=100&fit=crop&crop=face",
     rating: 5,
     text: "Idéal pour les déjeuners au bureau. L'interface est intuitive et le suivi de commande en temps réel est un vrai plus.",
   },
-]
+];
 
 export function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-  }
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
 
   const prevTestimonial = () => {
     setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    )
-  }
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+    );
+  };
 
   useEffect(() => {
-    if (!isAutoPlaying) return
-    const interval = setInterval(nextTestimonial, 5000)
-    return () => clearInterval(interval)
-  }, [isAutoPlaying])
+    if (!isAutoPlaying) return;
+    const interval = setInterval(nextTestimonial, 5000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
 
   return (
-    <section id="temoignages" className="relative overflow-hidden bg-muted/30 py-20 md:py-32">
+    <section
+      id="temoignages"
+      className="relative overflow-hidden bg-muted/30 py-20 md:py-32"
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10 opacity-30">
         <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
@@ -128,10 +136,10 @@ export function TestimonialsSection() {
                         <Star
                           key={i}
                           className={cn(
-                            'h-5 w-5',
+                            "h-5 w-5",
                             i < testimonials[currentIndex].rating
-                              ? 'fill-accent text-accent'
-                              : 'text-muted'
+                              ? "fill-accent text-accent"
+                              : "text-muted",
                           )}
                         />
                       ))}
@@ -144,8 +152,12 @@ export function TestimonialsSection() {
 
                     {/* Author */}
                     <div className="flex items-center gap-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-3xl">
-                        {testimonials[currentIndex].avatar}
+                      <div className="relative h-14 w-14 overflow-hidden rounded-full ring-4 ring-primary/20">
+                        <img
+                          src={testimonials[currentIndex].avatar}
+                          alt={testimonials[currentIndex].name}
+                          className="h-full w-full object-cover"
+                        />
                       </div>
                       <div>
                         <p className="font-bold text-card-foreground">
@@ -181,10 +193,10 @@ export function TestimonialsSection() {
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   className={cn(
-                    'h-2 rounded-full transition-all duration-300',
+                    "h-2 rounded-full transition-all duration-300",
                     currentIndex === index
-                      ? 'w-8 bg-primary'
-                      : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                      ? "w-8 bg-primary"
+                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50",
                   )}
                   aria-label={`Témoignage ${index + 1}`}
                 />
@@ -212,9 +224,9 @@ export function TestimonialsSection() {
           className="mt-16 grid gap-6 sm:grid-cols-3"
         >
           {[
-            { value: '4.9/5', label: 'Note moyenne', icon: '⭐' },
-            { value: '50k+', label: 'Avis positifs', icon: '💬' },
-            { value: '98%', label: 'Clients satisfaits', icon: '❤️' },
+            { value: "4.9/5", label: "Note moyenne", icon: "⭐" },
+            { value: "50k+", label: "Avis positifs", icon: "💬" },
+            { value: "98%", label: "Clients satisfaits", icon: "❤️" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -233,5 +245,5 @@ export function TestimonialsSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

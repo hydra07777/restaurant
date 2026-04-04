@@ -1,122 +1,128 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Star, Clock, Flame } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Star, Clock, Flame } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const categories = [
-  { id: 'all', label: 'Tous', icon: '🍽️' },
-  { id: 'pizza', label: 'Pizzas', icon: '🍕' },
-  { id: 'burger', label: 'Burgers', icon: '🍔' },
-  { id: 'sushi', label: 'Sushi', icon: '🍱' },
-  { id: 'salad', label: 'Salades', icon: '🥗' },
-  { id: 'dessert', label: 'Desserts', icon: '🍰' },
-]
+  { id: "all", label: "Tous", icon: "🍽️" },
+  { id: "pizza", label: "Pizzas", icon: "🍕" },
+  { id: "burger", label: "Burgers", icon: "🍔" },
+  { id: "sushi", label: "Sushi", icon: "🍱" },
+  { id: "salad", label: "Salades", icon: "🥗" },
+  { id: "dessert", label: "Desserts", icon: "🍰" },
+];
 
 const products = [
   {
     id: 1,
-    name: 'Pizza Margherita',
-    description: 'Sauce tomate, mozzarella, basilic frais',
-    price: 12.90,
-    originalPrice: 15.90,
+    name: "Pizza Margherita",
+    description: "Sauce tomate, mozzarella, basilic frais",
+    price: 12.9,
+    originalPrice: 15.9,
     rating: 4.8,
     reviews: 234,
-    time: '25-30 min',
-    category: 'pizza',
-    image: '🍕',
+    time: "25-30 min",
+    category: "pizza",
+    image:
+      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop",
     isPopular: true,
     isNew: false,
   },
   {
     id: 2,
-    name: 'Burger Gourmet',
-    description: 'Bœuf Angus, cheddar, bacon croustillant',
-    price: 14.50,
+    name: "Burger Gourmet",
+    description: "Bœuf Angus, cheddar, bacon croustillant",
+    price: 14.5,
     originalPrice: null,
     rating: 4.9,
     reviews: 456,
-    time: '20-25 min',
-    category: 'burger',
-    image: '🍔',
+    time: "20-25 min",
+    category: "burger",
+    image:
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop",
     isPopular: true,
     isNew: false,
   },
   {
     id: 3,
-    name: 'Sushi Mix Premium',
-    description: '12 pièces: saumon, thon, crevette',
-    price: 18.90,
-    originalPrice: 22.90,
+    name: "Sushi Mix Premium",
+    description: "12 pièces: saumon, thon, crevette",
+    price: 18.9,
+    originalPrice: 22.9,
     rating: 4.7,
     reviews: 189,
-    time: '30-35 min',
-    category: 'sushi',
-    image: '🍱',
+    time: "30-35 min",
+    category: "sushi",
+    image:
+      "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&h=300&fit=crop",
     isPopular: false,
     isNew: true,
   },
   {
     id: 4,
-    name: 'Salade César',
-    description: 'Poulet grillé, parmesan, croûtons',
-    price: 11.50,
+    name: "Salade César",
+    description: "Poulet grillé, parmesan, croûtons",
+    price: 11.5,
     originalPrice: null,
     rating: 4.6,
     reviews: 156,
-    time: '15-20 min',
-    category: 'salad',
-    image: '🥗',
+    time: "15-20 min",
+    category: "salad",
+    image:
+      "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=300&fit=crop",
     isPopular: false,
     isNew: false,
   },
   {
     id: 5,
-    name: 'Tiramisu Maison',
-    description: 'Mascarpone, café, cacao',
-    price: 7.90,
+    name: "Tiramisu Maison",
+    description: "Mascarpone, café, cacao",
+    price: 7.9,
     originalPrice: null,
     rating: 4.9,
     reviews: 312,
-    time: '10 min',
-    category: 'dessert',
-    image: '🍰',
+    time: "10 min",
+    category: "dessert",
+    image:
+      "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop",
     isPopular: true,
     isNew: false,
   },
   {
     id: 6,
-    name: 'Pizza Quattro Formaggi',
-    description: 'Mozzarella, gorgonzola, parmesan, chèvre',
-    price: 15.90,
+    name: "Pizza Quattro Formaggi",
+    description: "Mozzarella, gorgonzola, parmesan, chèvre",
+    price: 15.9,
     originalPrice: null,
     rating: 4.8,
     reviews: 198,
-    time: '25-30 min',
-    category: 'pizza',
-    image: '🍕',
+    time: "25-30 min",
+    category: "pizza",
+    image:
+      "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop",
     isPopular: false,
     isNew: true,
   },
-]
+];
 
 export function ProductsSection() {
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [addedItems, setAddedItems] = useState<number[]>([])
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [addedItems, setAddedItems] = useState<number[]>([]);
 
   const filteredProducts =
-    activeCategory === 'all'
+    activeCategory === "all"
       ? products
-      : products.filter((p) => p.category === activeCategory)
+      : products.filter((p) => p.category === activeCategory);
 
   const handleAddToCart = (id: number) => {
-    setAddedItems((prev) => [...prev, id])
+    setAddedItems((prev) => [...prev, id]);
     setTimeout(() => {
-      setAddedItems((prev) => prev.filter((item) => item !== id))
-    }, 1500)
-  }
+      setAddedItems((prev) => prev.filter((item) => item !== id));
+    }, 1500);
+  };
 
   return (
     <section id="menu" className="py-20 md:py-32">
@@ -156,10 +162,10 @@ export function ProductsSection() {
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveCategory(category.id)}
               className={cn(
-                'flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300',
+                "flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300",
                 activeCategory === category.id
-                  ? 'bg-primary text-primary-foreground shadow-lg'
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+                  ? "bg-primary text-primary-foreground shadow-lg"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground",
               )}
             >
               <span>{category.icon}</span>
@@ -169,10 +175,7 @@ export function ProductsSection() {
         </motion.div>
 
         {/* Products Grid */}
-        <motion.div
-          layout
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((product, index) => (
               <motion.div
@@ -212,11 +215,15 @@ export function ProductsSection() {
 
                   {/* Image */}
                   <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                    className="mb-4 flex h-32 items-center justify-center text-7xl"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="mb-4 overflow-hidden rounded-xl h-40"
                   >
-                    {product.image}
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
                   </motion.div>
 
                   {/* Content */}
@@ -264,10 +271,10 @@ export function ProductsSection() {
                           size="icon"
                           onClick={() => handleAddToCart(product.id)}
                           className={cn(
-                            'h-10 w-10 rounded-full transition-all duration-300',
+                            "h-10 w-10 rounded-full transition-all duration-300",
                             addedItems.includes(product.id)
-                              ? 'bg-secondary text-secondary-foreground'
-                              : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                              ? "bg-secondary text-secondary-foreground"
+                              : "bg-primary text-primary-foreground hover:bg-primary/90",
                           )}
                         >
                           <AnimatePresence mode="wait">
@@ -324,5 +331,5 @@ export function ProductsSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
