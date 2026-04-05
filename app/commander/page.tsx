@@ -21,36 +21,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const cartItems = [
-  {
-    id: 1,
-    name: "Pizza Margherita",
-    description: "Sauce tomate, mozzarella, basilic frais",
-    price: 12.9,
-    quantity: 2,
-    image:
-      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200&h=200&fit=crop",
-  },
-  {
-    id: 2,
-    name: "Burger Gourmet",
-    description: "Bœuf Angus, cheddar, bacon croustillant",
-    price: 14.5,
-    quantity: 1,
-    image:
-      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop",
-  },
-  {
-    id: 5,
-    name: "Tiramisu Maison",
-    description: "Mascarpone, café, cacao",
-    price: 7.9,
-    quantity: 1,
-    image:
-      "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=200&h=200&fit=crop",
-  },
-];
+import { useCart } from "@/hooks/useCart";
 
 const deliveryTimes = [
   {
@@ -77,33 +48,13 @@ const steps = [
 
 export default function CommanderPage() {
   const router = useRouter();
-  const [items, setItems] = useState(cartItems);
+  const { items, removeItem, updateQuantity, clearCart, subtotal } = useCart();
   const [activeDelivery, setActiveDelivery] = useState("standard");
   const [step, setStep] = useState(1);
   const [orderPlaced, setOrderPlaced] = useState(false);
 
-  const subtotal = items.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
   const deliveryPrice = activeDelivery === "express" ? 2.99 : 0;
   const total = subtotal + deliveryPrice;
-
-  const updateQuantity = (id: number, delta: number) => {
-    setItems((prev) =>
-      prev
-        .map((item) =>
-          item.id === id
-            ? { ...item, quantity: Math.max(0, item.quantity + delta) }
-            : item,
-        )
-        .filter((item) => item.quantity > 0),
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  };
 
   const handleNext = () => {
     if (step < 3) {
@@ -119,6 +70,7 @@ export default function CommanderPage() {
 
   const handlePlaceOrder = () => {
     setOrderPlaced(true);
+    clearCart();
   };
 
   const canProceed = () => {
@@ -169,11 +121,9 @@ export default function CommanderPage() {
                 variant="outline"
                 size="lg"
                 className="flex-1"
-                asChild
+                onClick={() => router.push("/")}
               >
-                <a href="/">
-                  Retour à l'accueil
-                </a>
+                Retour à l'accueil
               </Button>
               <Button
                 size="lg"
@@ -207,12 +157,10 @@ export default function CommanderPage() {
             variant="ghost"
             size="sm"
             className="mb-2 md:mb-4"
-            asChild
+            onClick={() => router.push("/")}
           >
-            <a href="/">
-              <ArrowLeft className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
-              Retour
-            </a>
+            <ArrowLeft className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
+            Retour
           </Button>
           <h1 className="text-2xl md:text-4xl font-bold text-foreground">
             Finaliser la commande
@@ -357,7 +305,9 @@ export default function CommanderPage() {
                                 size="icon"
                                 variant="outline"
                                 className="h-7 w-7 md:h-8 md:w-8"
-                                onClick={() => updateQuantity(item.id, -1)}
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity - 1)
+                                }
                               >
                                 <Minus className="h-2.5 w-2.5 md:h-3 md:w-3" />
                               </Button>
@@ -368,7 +318,9 @@ export default function CommanderPage() {
                                 size="icon"
                                 variant="outline"
                                 className="h-7 w-7 md:h-8 md:w-8"
-                                onClick={() => updateQuantity(item.id, 1)}
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
                               >
                                 <Plus className="h-2.5 w-2.5 md:h-3 md:w-3" />
                               </Button>
