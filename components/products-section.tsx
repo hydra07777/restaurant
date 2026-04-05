@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Star, Clock, Flame } from "lucide-react";
+import { Plus, Star, Clock, Flame, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/hooks/useCart";
 
 const categories = [
   { id: "all", label: "Tous", icon: "🍽️" },
@@ -111,16 +112,25 @@ const products = [
 export function ProductsSection() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [addedItems, setAddedItems] = useState<number[]>([]);
+  const { addItem } = useCart();
 
   const filteredProducts =
     activeCategory === "all"
       ? products
       : products.filter((p) => p.category === activeCategory);
 
-  const handleAddToCart = (id: number) => {
-    setAddedItems((prev) => [...prev, id]);
+  const handleAddToCart = (product: (typeof products)[0]) => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      image: product.image,
+    });
+
+    setAddedItems((prev) => [...prev, product.id]);
     setTimeout(() => {
-      setAddedItems((prev) => prev.filter((item) => item !== id));
+      setAddedItems((prev) => prev.filter((item) => item !== product.id));
     }, 1500);
   };
 
@@ -269,7 +279,7 @@ export function ProductsSection() {
                       >
                         <Button
                           size="icon"
-                          onClick={() => handleAddToCart(product.id)}
+                          onClick={() => handleAddToCart(product)}
                           className={cn(
                             "h-10 w-10 rounded-full transition-all duration-300",
                             addedItems.includes(product.id)
@@ -285,7 +295,7 @@ export function ProductsSection() {
                                 animate={{ scale: 1 }}
                                 exit={{ scale: 0 }}
                               >
-                                ✓
+                                <Check className="h-5 w-5" />
                               </motion.span>
                             ) : (
                               <motion.span

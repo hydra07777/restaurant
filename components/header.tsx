@@ -1,47 +1,54 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ShoppingBag, Sun, Moon } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ShoppingBag, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useCart } from "@/hooks/useCart";
 
 const navLinks = [
-  { href: '#accueil', label: 'Accueil' },
-  { href: '#menu', label: 'Menu' },
-  { href: '#propos', label: 'À propos' },
-  { href: '#temoignages', label: 'Témoignages' },
-  { href: '#contact', label: 'Contact' },
-]
+  { href: "#accueil", label: "Accueil" },
+  { href: "#menu", label: "Menu" },
+  { href: "#propos", label: "À propos" },
+  { href: "#temoignages", label: "Témoignages" },
+  { href: "#contact", label: "Contact" },
+];
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [cartCount] = useState(3)
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const { totalItems } = useCart();
 
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleCartClick = () => {
+    router.push("/commander");
+  };
 
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? 'glass border-b border-border/50 shadow-lg'
-          : 'bg-transparent'
+          ? "glass border-b border-border/50 shadow-lg"
+          : "bg-transparent",
       )}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -87,7 +94,7 @@ export function Header() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground"
                 aria-label="Toggle theme"
               >
@@ -99,7 +106,7 @@ export function Header() {
                     exit={{ y: 20, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {theme === 'dark' ? (
+                    {theme === "dark" ? (
                       <Sun className="h-5 w-5" />
                     ) : (
                       <Moon className="h-5 w-5" />
@@ -113,17 +120,18 @@ export function Header() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleCartClick}
               className="relative flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground"
               aria-label="Cart"
             >
               <ShoppingBag className="h-5 w-5" />
-              {cartCount > 0 && (
+              {totalItems > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground"
                 >
-                  {cartCount}
+                  {totalItems}
                 </motion.span>
               )}
             </motion.button>
@@ -163,7 +171,7 @@ export function Header() {
           {isMobileMenuOpen && (
             <motion.nav
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="overflow-hidden md:hidden"
@@ -190,7 +198,10 @@ export function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: navLinks.length * 0.1 }}
                 >
-                  <Button className="mt-2 w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                  <Button
+                    className="mt-2 w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                    onClick={handleCartClick}
+                  >
                     Commander maintenant
                   </Button>
                 </motion.div>
@@ -200,5 +211,5 @@ export function Header() {
         </AnimatePresence>
       </div>
     </motion.header>
-  )
+  );
 }
